@@ -6,7 +6,7 @@ import UrlService from "../services/UrlService";
 
 class UrlController {
     async generateUrl(req: Request, res: Response) {
-        const redirectUrl = req.body;
+        const { url: redirectUrl } = req.body;
         if (!redirectUrl) {
             return res.status(400).json({ error: 'URL is required' });
         }
@@ -25,16 +25,19 @@ class UrlController {
         }
     }
 
-    async getUrl(req: Request, res: Response){
+    async getUrl(req: Request, res: Response) {
         const shortUrl = req.params.url;
         if (!shortUrl) {
             return res.status(400).json({ error: 'URL is required' });
         }
         try {
             const url = await UrlService.getUrl(shortUrl);
-            return res.json(url?.redirectUrl);
+            if (!url) {
+                return res.status(400).json({error: 'URL is required'});
+            }
+            res.redirect(url);
         } catch (e) {
-            return res.status(500).json({ error: 'Internal Server Error' });
+            return res.status(500).json(e);
         }
 
     }

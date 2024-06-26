@@ -13,7 +13,6 @@ app.use('/url', Url)
 
 async function StartApp() {
   try {
-    mongoose.Collection.updateMany({}, {$rename: {"shortUrl": "redirectUrl"}});
     await mongoose.connect(db_url);
     app.listen(PORT, () => {
       console.log("Server running at PORT: ", PORT);
