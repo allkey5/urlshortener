@@ -26,7 +26,7 @@ class UrlController {
 
         try {
             const new_url = await UrlService.generateUrl(newUrlData);
-            return res.json("http:/localhost:" + process.env.PORT+ "/url/" + new_url.shortId);
+            return res.json("http:/localhost:" + process.env.PORT + "/url/" + new_url.shortId);
         } catch (error) {
             return res.status(500).json(error);
         }
@@ -47,7 +47,20 @@ class UrlController {
         } catch (e) {
             return res.status(500).json(e);
         }
+    }
 
+    async deleteUrl(req: Request, res: Response) {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        const shortId = req.params.url;
+        try {
+            await UrlService.deleteUrl(shortId);
+            return res.status(200).json();
+        } catch (e) {
+            return res.status(400).json(e);
+        }
     }
 
 }
