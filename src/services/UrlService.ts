@@ -22,7 +22,7 @@ class UrlService {
         try {
             const deleted = await Url.deleteOne({shortId: shortId});
             if(deleted.deletedCount != 1){
-                throw new Error("Error when deleting Url")
+                throw new Error("Not found Url")
             } 
         } catch (e) {
             throw new Error("Error when deleting Url: " + e);
