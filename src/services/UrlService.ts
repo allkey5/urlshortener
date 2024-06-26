@@ -12,6 +12,9 @@ class UrlService {
                 visitHistory: { timestamp: Date.now() },
             }
         });
+        if(url == null){
+            throw new Error("Url not found");
+        }
         return url?.redirectUrl;
     }
 }
