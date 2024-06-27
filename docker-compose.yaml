@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  urlshortener:
+    build: urlshortener/
+    ports:
+      - 3000:3000
+    environment:
+      - PORT=3000
+
+  mongodb:
+    image: mongo:7.0
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodata:/data/db
+
+volumes:
+  mongodata:
